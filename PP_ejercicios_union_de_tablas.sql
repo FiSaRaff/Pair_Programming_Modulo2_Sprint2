@@ -12,19 +12,28 @@ SELECT c.customer_id, c.company_name
 -- Nos piden concretamente conocer el nombre de la empresa, el año, y la cantidad de objetos que han pedido. Para ello 
 -- hará falta hacer 2 joins.    
 
-SELECT c.company_name,o.shipped_date,od.quantity
+SELECT c.company_name, YEAR(o.shipped_date), od.quantity
 	FROM order_details AS od
     INNER JOIN orders AS o
     ON od.order_id = o.order_id
     INNER JOIN customers AS c 
     ON o.customer_id = c.customer_id
-	WHERE c.country = "UK"
+	WHERE c.country lIKE 'UK'
+    
+
+
+	-- WHERE c.country = "UK"
     GROUP BY o.shipped_date
-	HAVING COUNT(od.quantity);
+	-- HAVING COUNT(od.quantity)
+    HAVING c.country = "UK";
     
 --    
-   
-   
-    
-    
-    
+   SELECT c.company_name, YEAR(o.shipped_date) AS año, SUM(od.quantity) AS 'total objetos'
+	FROM order_details AS od
+    INNER JOIN orders AS o
+    ON od.order_id = o.order_id
+    INNER JOIN customers AS c 
+    ON o.customer_id = c.customer_id
+    WHERE c.country lIKE 'UK'
+    GROUP BY c.company_name, año
+    ORDER BY c.company_name;

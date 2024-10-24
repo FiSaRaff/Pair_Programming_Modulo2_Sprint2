@@ -59,4 +59,4 @@ SELECT product_id, product_name
 -- enviados por cada empleado (mostrando el ID de empleado en cada caso).
 
 SELECT *
-	FROM products
+	FROM orders;
